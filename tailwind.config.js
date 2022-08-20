@@ -18,6 +18,10 @@ module.exports = {
       colors: {
         bgDark: "#2b3844",
       },
+      fontFamily: {
+        // add Nunito Sans
+        sans: ["Nunito Sans", "sans-serif"],
+      },
     },
   },
   plugins: [],
