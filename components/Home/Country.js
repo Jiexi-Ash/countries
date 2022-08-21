@@ -8,6 +8,9 @@ function Country({ country }) {
   const formattedPopulation = population
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+  // check if capital has more than one value in array
+
   return (
     <div className="rounded-lg shadow-lg bg-white max-w-sm">
       <img src={countryImage} alt={officialName} className="w-full h-40 " />

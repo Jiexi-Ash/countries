@@ -4,8 +4,8 @@ import { MoonIcon as MoonIconOutline } from "@heroicons/react/outline";
 
 function Navbar() {
   return (
-    <header className="bg-white shadow-sm px-4 py-[30px] md:px-20 md:py-6">
-      <nav className="flex justify-between items-center  max-w-8xl container mx-auto">
+    <header className="bg-white shadow-sm px-4 py-[30px] md:py-6 ">
+      <nav className="flex justify-between items-center  max-w-8xl container mx-auto md:px-20 ">
         <h1 className="text-sm font-extrabold lg:text-2xl ">
           Where in the world?
         </h1>

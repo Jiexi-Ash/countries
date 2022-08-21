@@ -13,7 +13,9 @@ function MainLayout({ children }) {
       </Head>
 
       <Navbar />
-      <main className="pt-10 px-7 md:pt-20 md:px-20">{children}</main>
+      <main className="pt-10 px-7 md:pt-20 md:px-20 max-w-8xl container mx-auto">
+        {children}
+      </main>
     </>
   );
 }
