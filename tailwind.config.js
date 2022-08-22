@@ -5,13 +5,13 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    screens: {
-      sm: "440px",
-      md: "768px",
-      lg: "976px",
-      xl: "1440px",
-    },
     extend: {
+      screens: {
+        sm: "375px",
+        md: "768px",
+        lg: "976px",
+        xl: "1440px",
+      },
       maxWidth: {
         "8xl": "1440px",
       },

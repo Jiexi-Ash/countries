@@ -7,7 +7,6 @@ export const getCountries = async () => {
     const { data } = await axios.get(`${GET_ALL_COUNTRIES_URL}/all`);
     return data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
@@ -15,9 +14,9 @@ export const getCountries = async () => {
 export const getCountryByName = async (name) => {
   try {
     const { data } = await axios.get(`${GET_ALL_COUNTRIES_URL}/name/${name}`);
+
     return data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
@@ -30,7 +29,28 @@ export const getCountriesByRegion = async (region) => {
 
     return data;
   } catch (error) {
-    console.log(error);
+    throw error;
+  }
+};
+
+export const getCountryByOfficialName = async (name) => {
+  try {
+    const { data } = await axios.get(
+      `${GET_ALL_COUNTRIES_URL}/name/${name}?fullText=true`
+    );
+
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getCountryByCode = async (code) => {
+  try {
+    const { data } = await axios.get(`${GET_ALL_COUNTRIES_URL}/alpha/${code}`);
+
+    return data;
+  } catch (error) {
     throw error;
   }
 };

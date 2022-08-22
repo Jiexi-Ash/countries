@@ -7,7 +7,7 @@ function Loader({ position = "center" }) {
         position === "center" ? "justify-center" : ""
       }`}
     >
-      <div className=" w-4 h-4 border-b-2 border-black rounded-full animate-spin"></div>
+      <div className=" w-4 h-4 border-b-2 border-[#C4C4C4] rounded-full animate-spin"></div>
     </div>
   );
 }

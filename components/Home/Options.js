@@ -27,11 +27,14 @@ function Options({ onSelect, onClearFilter, handleSearch, handleCountries }) {
     e.preventDefault();
     setLoading(true);
     await handleSearch(searchInput);
+    setLoading(false);
   };
 
   const clearSearch = async () => {
+    setLoading(true);
     await handleCountries();
     setSearchInput("");
+    setLoading(false);
   };
 
   return (
@@ -47,11 +50,17 @@ function Options({ onSelect, onClearFilter, handleSearch, handleCountries }) {
             value={searchInput}
           />
         </form>
-        {searchInput.length > 0 && (
+        {searchInput.length > 1 && !loading && (
           <XIcon
             className="w-6 h-6 mr-4  text-[#C4C4C4] md:w-[18px] md:h-[18px] ml-8 hover:cursor-pointer"
             onClick={clearSearch}
           />
+        )}
+
+        {searchInput.length > 1 && loading && (
+          <div className="mr-4">
+            <Loader />
+          </div>
         )}
       </div>
 
@@ -69,7 +78,7 @@ function Options({ onSelect, onClearFilter, handleSearch, handleCountries }) {
               className="bg-white py-[14px] px-4 drop-shadow-xl rounded-md mt-10 md:mt-0"
               onClick={clearFilter}
             >
-              {loading ? (
+              {defaultText !== DEFAULT_TEXT && loading ? (
                 <Loader />
               ) : (
                 <XIcon className="w-4 h-4 text-[#111517]" />

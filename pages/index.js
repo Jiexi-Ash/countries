@@ -5,38 +5,39 @@ import Options from "components/Home/Options";
 import Countries from "components/Home/Countries";
 import axios from "axios";
 
-export default function Home({ countries }) {
+export default function Home({ countries, err }) {
+  const [error, setError] = useState(err);
   const [currentCountries, setCountries] = useState([]);
 
   useEffect(() => {
     setCountries(countries);
   }, [countries]);
 
-  const getCountriesByR = async (region) => {
-    axios
-      .get(`/api/countries/region?region=${region}`)
+  const handleCountries = async () => {
+    await axios
+      .get("/api/countries/all")
       .then((res) => {
+        console.log("hello hello");
         console.log(res);
         setCountries(res.data);
+        setError("");
       })
       .catch((err) => {
-        console.log(err);
+        setError("Something went wrong");
       });
-  };
-
-  const handleCountries = async () => {
-    const countries = await getCountries();
-    setCountries(countries);
   };
 
   const handleClearFilter = async () => {
     await axios
       .get("/api/countries/all")
       .then((res) => {
+        console.log("hello hello");
+        console.log(res);
         setCountries(res.data);
+        setError("");
       })
       .catch((err) => {
-        console.log(err);
+        setError("Something went wrong");
       });
   };
 
@@ -47,7 +48,7 @@ export default function Home({ countries }) {
         setCountries(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        setError("Something went wrong");
       });
   };
 
@@ -67,16 +68,33 @@ export default function Home({ countries }) {
         handleSearch={handleSearchByName}
         handleCountries={handleCountries}
       />
-      <Countries countries={currentCountries} />
+      {countries && !error && (
+        <>
+          <Countries countries={currentCountries} />
+        </>
+      )}
+
+      {error && (
+        <div className="pt-20 flex justify-center items-center">{error}</div>
+      )}
     </MainLayout>
   );
 }
 
 export const getStaticProps = async () => {
-  const countries = await getCountries();
-  return {
-    props: {
-      countries,
-    },
-  };
+  try {
+    const countries = await getCountries();
+    return {
+      props: {
+        countries,
+        error: null,
+      },
+    };
+  } catch (err) {
+    return {
+      props: {
+        err: "something went wrong",
+      },
+    };
+  }
 };

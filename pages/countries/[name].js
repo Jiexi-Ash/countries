@@ -1,23 +1,57 @@
 import React from "react";
-import { getCountryByName } from "helpers";
+import { getCountryByName, getCountries, getCountryByCode } from "helpers";
+import MainLayout from "components/UI/MainLayout";
+import { ArrowNarrowLeftIcon } from "@heroicons/react/solid";
+import CountryDetails from "components/Country/CountryDetails";
+import { useRouter } from "next/router";
 
-function CountryPage({ country }) {
-  console.log(country);
-  return <main>CountryPage</main>;
+function CountryPage({ country, error }) {
+  const router = useRouter();
+  const handleBack = () => {
+    // go back
+    router.back();
+  };
+
+  return (
+    <MainLayout>
+      <>
+        <button
+          className="py-[6px] px-6  font-light text-sm border  shadow  shadow-[#979797] rounded-sm leading-5 hover:shadow-md"
+          onClick={handleBack}
+        >
+          <span className="flex items-center">
+            <ArrowNarrowLeftIcon className="w-4 h-4 mr-2" />
+            <span>Back</span>
+          </span>
+        </button>
+
+        {country && <CountryDetails country={country} />}
+        {!country && error && <div>{error}</div>}
+      </>
+    </MainLayout>
+  );
 }
 
 export default CountryPage;
 
 export const getStaticProps = async (context) => {
   const { name } = context.params;
+  console.log(context.params);
 
-  const country = await getCountryByName(name);
-
-  return {
-    props: {
-      country,
-    },
-  };
+  try {
+    const country = await getCountryByName(name);
+    return {
+      props: {
+        country,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        error: "something went wrong",
+      },
+    };
+  }
 };
 
 export const getStaticPaths = async () => {
@@ -25,7 +59,7 @@ export const getStaticPaths = async () => {
 
   const paths = countries.map((country) => ({
     params: {
-      name: country.name.official,
+      name: country.name.common,
     },
   }));
 
