@@ -13,8 +13,6 @@ export default function Home({ countries }) {
   }, [countries]);
 
   const getCountriesByR = async (region) => {
-    console.log(region);
-
     axios
       .get(`/api/countries/region?region=${region}`)
       .then((res) => {
@@ -26,9 +24,25 @@ export default function Home({ countries }) {
       });
   };
 
+  const handleCountries = async () => {
+    const countries = await getCountries();
+    setCountries(countries);
+  };
+
   const handleClearFilter = async () => {
     await axios
       .get("/api/countries/all")
+      .then((res) => {
+        setCountries(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSearchByName = async (name) => {
+    axios
+      .get(`/api/countries/fetchByName?name=${name}`)
       .then((res) => {
         setCountries(res.data);
       })
@@ -47,7 +61,12 @@ export default function Home({ countries }) {
 
   return (
     <MainLayout>
-      <Options onSelect={filterByRegion} onClearFilter={handleClearFilter} />
+      <Options
+        onSelect={filterByRegion}
+        onClearFilter={handleClearFilter}
+        handleSearch={handleSearchByName}
+        handleCountries={handleCountries}
+      />
       <Countries countries={currentCountries} />
     </MainLayout>
   );

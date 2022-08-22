@@ -14,9 +14,7 @@ export const getCountries = async () => {
 
 export const getCountryByName = async (name) => {
   try {
-    const { data } = await axios.get(
-      `${GET_ALL_COUNTRIES_URL}/name/${name}?fullText=true`
-    );
+    const { data } = await axios.get(`${GET_ALL_COUNTRIES_URL}/name/${name}`);
     return data;
   } catch (error) {
     console.log(error);

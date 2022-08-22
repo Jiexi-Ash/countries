@@ -3,10 +3,11 @@ import Loader from "components/UI/Loader";
 import { SearchIcon, ChevronDownIcon, XIcon } from "@heroicons/react/solid";
 
 const DEFAULT_TEXT = "Filter by Region";
-function Options({ onSelect, onClearFilter }) {
+function Options({ onSelect, onClearFilter, handleSearch, handleCountries }) {
   const [loading, setLoading] = useState(false);
   const [showSelect, setShowSelect] = useState(false);
   const [defaultText, setDefaultText] = useState(DEFAULT_TEXT);
+  const [searchInput, setSearchInput] = useState("");
 
   const onClickHandler = (region) => {
     setShowSelect(false);
@@ -22,19 +23,40 @@ function Options({ onSelect, onClearFilter }) {
     setLoading(false);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    await handleSearch(searchInput);
+  };
+
+  const clearSearch = async () => {
+    await handleCountries();
+    setSearchInput("");
+  };
+
   return (
     <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center">
       <div className="flex  items-center bg-white drop-shadow-xl py-[14px] md:py-[18px] w-full md:max-w-[400px] rounded-md">
         <SearchIcon className="w-6 h-6 mr-2  text-[#C4C4C4] md:w-[18px] md:h-[18px] ml-8" />
-        <input
-          type="text"
-          placeholder="Search for a country"
-          className="text-[12px] text-[#C4C4C4] py-0 w-full border-none focus:ring-0"
-        />
+        <form onSubmit={handleSubmit} className="flex-1 pr-4">
+          <input
+            type="text"
+            placeholder="Search for a country"
+            className="text-[12px] text-[#C4C4C4] py-0 w-full border-none focus:ring-0"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
+          />
+        </form>
+        {searchInput.length > 0 && (
+          <XIcon
+            className="w-6 h-6 mr-4  text-[#C4C4C4] md:w-[18px] md:h-[18px] ml-8 hover:cursor-pointer"
+            onClick={clearSearch}
+          />
+        )}
       </div>
 
       <div className="w-full max-w-[250px] relative">
-        <div className="flex space-x-2">
+        <div className="flex items-center justify-center space-x-2">
           <button
             className="w-full flex justify-between items-center py-[14px] bg-white drop-shadow-xl  rounded-md mt-10 text-[12px] px-6 md:mt-0 md:py-[18px] md:px-[18px]"
             onClick={() => setShowSelect(!showSelect)}
@@ -44,7 +66,7 @@ function Options({ onSelect, onClearFilter }) {
           </button>
           {defaultText !== DEFAULT_TEXT && (
             <button
-              className="bg-white py-[14px] px-4 drop-shadow-xl rounded-md"
+              className="bg-white py-[14px] px-4 drop-shadow-xl rounded-md mt-10 md:mt-0"
               onClick={clearFilter}
             >
               {loading ? (
