@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 function CountryPage({ country, error }) {
   const router = useRouter();
   const handleBack = () => {
-    // go back
     router.back();
   };
 

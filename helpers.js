@@ -12,7 +12,6 @@ export const getCountries = async () => {
 };
 
 export const getCountryByName = async (name) => {
-  console.log(name);
   try {
     const { data } = await axios.get(`${GET_ALL_COUNTRIES_URL}/name/${name}`);
 

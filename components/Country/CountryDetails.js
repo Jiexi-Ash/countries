@@ -30,21 +30,21 @@ function CountryDetails({ country }) {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-  const nativeNames = name.nativeName;
+  const nName = name.nativeName
+    ? Object.values(name.nativeName).length > 1
+      ? Object.values(name.nativeName)[1].official
+      : Object.values(name.nativeName)[0].official
+    : name.common;
 
-  const nativeName =
-    Object.values(nativeNames).length > 1
-      ? Object.values(nativeNames)[1].official
-      : Object.values(nativeNames)[0].official;
+  const getLanguages = languages ? Object.values(languages) : "";
 
-  const getLanguages = Object.values(languages);
+  const allLanguages = getLanguages
+    ? getLanguages.length > 1
+      ? getLanguages.join(", ")
+      : getLanguages[0]
+    : "n/a";
 
-  const allLanguages =
-    getLanguages.length > 1 ? getLanguages.join(", ") : getLanguages[0];
-
-  const allCurrencies = Object.values(currencies);
-
-  const allCurrenciesString = allCurrencies[0].name;
+  const allCurrencies = currencies ? Object.values(currencies)[0] : "n/a";
 
   const allCapitals = capital ? capital.join(", ") : capital;
 
@@ -62,7 +62,7 @@ function CountryDetails({ country }) {
                   <p className="font-semibold text-sm leading-8">
                     Native Name:
                   </p>
-                  <p className="font-light text-sm leading-8">{nativeName}</p>
+                  <p className="font-light text-sm leading-8">{nName}</p>
                 </div>
                 <div className="flex space-x-2">
                   <p className="font-semibold text-sm leading-8">Population:</p>
@@ -76,11 +76,15 @@ function CountryDetails({ country }) {
                 </div>
                 <div className="flex space-x-2">
                   <p className="font-semibold text-sm leading-8">Subregion:</p>
-                  <p className="font-light text-sm leading-8">{subregion}</p>
+                  <p className="font-light text-sm leading-8">
+                    {subregion ? subregion : "n/a"}
+                  </p>
                 </div>
                 <div className="flex space-x-2">
                   <p className="font-semibold text-sm leading-8">Capital:</p>
-                  <p className="font-light text-sm leading-8">{allCapitals}</p>
+                  <p className="font-light text-sm leading-8">
+                    {allCapitals ? allCapitals : "n/a"}
+                  </p>
                 </div>
               </div>
             </div>
@@ -93,9 +97,7 @@ function CountryDetails({ country }) {
               </div>
               <div className="flex space-x-2">
                 <p className="font-semibold text-sm leading-8">Currencies:</p>
-                <p className="font-light text-sm leading-8">
-                  {allCurrenciesString}
-                </p>
+                <p className="font-light text-sm leading-8">{allCurrencies}</p>
               </div>
               <div className="flex space-x-2 max-w-[300px]">
                 <p className="font-semibold text-sm leading-8">Languages:</p>
