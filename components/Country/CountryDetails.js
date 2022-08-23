@@ -30,13 +30,17 @@ function CountryDetails({ country }) {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-  const nativeNames = name.nativeName ? name.nativeName : "";
+  const checkNativeName = () => {
+    if (name.nativeName) {
+      const nativeName = Object.values(name.nativeName);
 
-  const nativeName = nativeNames
-    ? Object.values(nativeNames).length > 1
-      ? Object.values(nativeNames)[1].official
-      : Object.values(nativeNames)[0].official
-    : "n/a";
+      const nativeNameFirst = nativeName[0];
+
+      return nativeNameFirst.official;
+    } else {
+      return "n/a";
+    }
+  };
 
   const checkLanguages = () => {
     if (languages) {
@@ -56,7 +60,7 @@ function CountryDetails({ country }) {
       const allCurrencies =
         getCurrencies.length > 1 ? getCurrencies.join(", ") : getCurrencies[0];
 
-      return allCurrencies;
+      return allCurrencies.name;
     } else {
       return "n/a";
     }
@@ -78,7 +82,9 @@ function CountryDetails({ country }) {
                   <p className="font-semibold text-sm leading-8">
                     Native Name:
                   </p>
-                  <p className="font-light text-sm leading-8">{nativeName}</p>
+                  <p className="font-light text-sm leading-8">
+                    {checkNativeName()}
+                  </p>
                 </div>
                 <div className="flex space-x-2">
                   <p className="font-semibold text-sm leading-8">Population:</p>
