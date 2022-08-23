@@ -16,7 +16,7 @@ function CountryPage({ country, error }) {
     <MainLayout>
       <>
         <button
-          className="py-[6px] px-6  font-light text-sm border  shadow  shadow-[#979797] rounded-sm leading-5 hover:shadow-md"
+          className="py-[6px] px-6  font-light text-sm  bg-white outline-none border-none drop-shadow-xl rounded-md leading-5 dark:bg-[#2B3844]"
           onClick={handleBack}
         >
           <span className="flex items-center">
@@ -36,7 +36,6 @@ export default CountryPage;
 
 export const getStaticProps = async (context) => {
   const { name } = context.params;
-  console.log(context.params);
 
   try {
     const country = await getCountryByName(name);

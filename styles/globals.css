@@ -5,12 +5,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800&display=swap");
 @layer base {
   body {
-    @apply font-sans bg-[#FAFAFA];
+    @apply font-sans bg-[#FAFAFA] dark:bg-[#202c36];
+  }
+
+  h1 {
+    @apply text-[#111517] dark:text-white;
+  }
+
+  p {
+    @apply text-[#111517] dark:text-white;
+  }
+
+  span {
+    @apply text-[#111517] dark:text-white;
   }
 }
 
 @layer components {
   .list {
-    @apply text-[12px] text-[#111517];
+    @apply text-[12px] text-[#111517] dark:text-white;
   }
 }

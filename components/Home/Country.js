@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 function Country({ country }) {
@@ -12,6 +11,7 @@ function Country({ country }) {
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
   const handleRouter = () => {
+    // if country
     router.push(`/countries/${name.common}`);
   };
 
@@ -19,7 +19,7 @@ function Country({ country }) {
 
   return (
     <div
-      className="rounded-lg shadow-lg bg-white max-w-sm cursor-pointer"
+      className="rounded-lg shadow-lg bg-white max-w-sm cursor-pointer dark:bg-bgDark"
       onClick={handleRouter}
     >
       <img src={countryImage} alt={officialName} className="w-full h-40 " />

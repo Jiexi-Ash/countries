@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import MainLayout from "components/UI/MainLayout";
-import { getCountries, getCountriesByRegion } from "helpers";
+import { getCountries } from "helpers";
 import Options from "components/Home/Options";
 import Countries from "components/Home/Countries";
 import axios from "axios";
@@ -17,8 +17,6 @@ export default function Home({ countries, err }) {
     await axios
       .get("/api/countries/all")
       .then((res) => {
-        console.log("hello hello");
-        console.log(res);
         setCountries(res.data);
         setError("");
       })
@@ -31,8 +29,6 @@ export default function Home({ countries, err }) {
     await axios
       .get("/api/countries/all")
       .then((res) => {
-        console.log("hello hello");
-        console.log(res);
         setCountries(res.data);
         setError("");
       })
