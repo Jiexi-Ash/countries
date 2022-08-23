@@ -30,21 +30,37 @@ function CountryDetails({ country }) {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-  const nName = name.nativeName
-    ? Object.values(name.nativeName).length > 1
-      ? Object.values(name.nativeName)[1].official
-      : Object.values(name.nativeName)[0].official
-    : name.common;
+  const nativeNames = name.nativeName ? name.nativeName : "";
 
-  const getLanguages = languages ? Object.values(languages) : "";
-
-  const allLanguages = getLanguages
-    ? getLanguages.length > 1
-      ? getLanguages.join(", ")
-      : getLanguages[0]
+  const nativeName = nativeNames
+    ? Object.values(nativeNames).length > 1
+      ? Object.values(nativeNames)[1].official
+      : Object.values(nativeNames)[0].official
     : "n/a";
 
-  const allCurrencies = currencies ? Object.values(currencies)[0] : "n/a";
+  const checkLanguages = () => {
+    if (languages) {
+      const getLanguages = Object.values(languages);
+      const allLanguages =
+        getLanguages.length > 1 ? getLanguages.join(", ") : getLanguages[0];
+
+      return allLanguages;
+    } else {
+      return "n/a";
+    }
+  };
+
+  const checkCurrencies = () => {
+    if (currencies) {
+      const getCurrencies = Object.values(currencies);
+      const allCurrencies =
+        getCurrencies.length > 1 ? getCurrencies.join(", ") : getCurrencies[0];
+
+      return allCurrencies;
+    } else {
+      return "n/a";
+    }
+  };
 
   const allCapitals = capital ? capital.join(", ") : capital;
 
@@ -62,7 +78,7 @@ function CountryDetails({ country }) {
                   <p className="font-semibold text-sm leading-8">
                     Native Name:
                   </p>
-                  <p className="font-light text-sm leading-8">{nName}</p>
+                  <p className="font-light text-sm leading-8">{nativeName}</p>
                 </div>
                 <div className="flex space-x-2">
                   <p className="font-semibold text-sm leading-8">Population:</p>
@@ -76,15 +92,11 @@ function CountryDetails({ country }) {
                 </div>
                 <div className="flex space-x-2">
                   <p className="font-semibold text-sm leading-8">Subregion:</p>
-                  <p className="font-light text-sm leading-8">
-                    {subregion ? subregion : "n/a"}
-                  </p>
+                  <p className="font-light text-sm leading-8">{subregion}</p>
                 </div>
                 <div className="flex space-x-2">
                   <p className="font-semibold text-sm leading-8">Capital:</p>
-                  <p className="font-light text-sm leading-8">
-                    {allCapitals ? allCapitals : "n/a"}
-                  </p>
+                  <p className="font-light text-sm leading-8">{allCapitals}</p>
                 </div>
               </div>
             </div>
@@ -97,11 +109,15 @@ function CountryDetails({ country }) {
               </div>
               <div className="flex space-x-2">
                 <p className="font-semibold text-sm leading-8">Currencies:</p>
-                <p className="font-light text-sm leading-8">{allCurrencies}</p>
+                <p className="font-light text-sm leading-8">
+                  {checkCurrencies()}
+                </p>
               </div>
               <div className="flex space-x-2 max-w-[300px]">
                 <p className="font-semibold text-sm leading-8">Languages:</p>
-                <p className="font-light text-sm leading-8">{allLanguages}</p>
+                <p className="font-light text-sm leading-8">
+                  {checkLanguages()}
+                </p>
               </div>
             </div>
           </div>
